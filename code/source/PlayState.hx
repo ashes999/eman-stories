@@ -12,10 +12,6 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-
-		var sprite = new FlxSprite();
-		sprite.loadGraphic("assets/images/ba.png");
-		add(sprite);
 	}
 
 	override public function update(elapsed:Float):Void
