@@ -19,7 +19,5 @@ class World
         this.seed = seed;
 
         instance = this;
-
-        trace('World created with seed=${seed}');
     }
 }
