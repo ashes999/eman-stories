@@ -11,6 +11,7 @@ class PlayState extends FlxState
 {
 	override public function create():Void
 	{
+		new deengames.emanstories.model.World();
 		super.create();
 	}
 
