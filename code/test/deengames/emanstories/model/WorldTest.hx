@@ -22,4 +22,14 @@ class WorldTest
         var world = new World(expected);
         Assert.areEqual(expected, world.seed);
     }
+
+    @Test
+    public function instanceIsSetToLastInstanceCreated():Void
+    {
+        var w1 = new World();
+        Assert.areEqual(w1, World.instance);
+
+        var w2 = new World();
+        Assert.areEqual(w2, World.instance);                        
+    }
 }
