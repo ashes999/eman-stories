@@ -1,5 +1,8 @@
 package deengames.emanstories.model;
 
+import de.polygonal.core.math.random.RNG;
+import de.polygonal.core.math.random.ParkMiller;
+
 class World
 {
     public static var instance(default, null):World; // not really singleton
@@ -9,15 +12,18 @@ class World
     // All randomly-generated stuff uses that seed.
     public var seed(default, null):Int;
 
+    private var rng:RNG;
+
     public function new(seed:Int = -1)
     {
+        World.instance = this;
+        
         if (seed < 0)
         {
             seed = Math.round(Math.random() * MAX_SEED);
         }
 
         this.seed = seed;
-
-        instance = this;
+        this.rng = new ParkMiller(this.seed);
     }
 }
