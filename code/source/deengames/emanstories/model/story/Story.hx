@@ -18,7 +18,7 @@ class Story
         this.majorEvents = [
             // Turn into data objects of some sort.
             // Confront atagonist has sub-flavours, eg. he taunts you vs. he says you are growing in power
-            "Evil {antagonist} captures {friend} and runs", // intro
+            "Evil {antagonist} captures {friend} at {town} and runs", // intro
             "Confront antagonist at {location 1}, who taunts", // encounter/area 1
             "Confront antagonist at {location 2}, who appreciates", // you are growing in power ...
             "Final confrontation at {epic location}" // he's determined to beat you
