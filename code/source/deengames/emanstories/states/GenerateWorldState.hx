@@ -1,5 +1,6 @@
 package deengames.emanstories.states;
 
+import flixel.FlxG;
 import flixel.text.FlxText;
 import quasar.core.QuasarState;
 import deengames.emanstories.model.World;
@@ -19,5 +20,9 @@ class GenerateWorldState extends QuasarState
         this.text.x = (this.width - this.text.width) / 2;
         this.text.y = (this.height - this.text.height) / 2;
         add(this.text);
+
+        this.after(1, function() {
+            FlxG.switchState(new AreaMapState());
+        });
     }
 }

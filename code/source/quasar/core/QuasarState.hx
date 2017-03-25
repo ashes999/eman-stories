@@ -25,6 +25,7 @@ class QuasarState extends FlxState
     {
         super.create();
         this.blackout = this.addSprite("assets/images/quasar/blackout.jpg");                
+        this.blackout.alpha = 0;
     }    
 
     public function get_width():Int
