@@ -12,7 +12,7 @@ class World
     // All randomly-generated stuff uses that seed.
     public var seed(default, null):Int;
 
-    private var rng:RNG;
+    private var seededRng:RNG;
 
     public function new(seed:Int = -1)
     {
@@ -24,6 +24,6 @@ class World
         }
 
         this.seed = seed;
-        this.rng = new ParkMiller(this.seed);
+        this.seededRng = new ParkMiller(this.seed);
     }
 }
