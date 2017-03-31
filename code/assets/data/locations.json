@@ -1,0 +1,10 @@
+{
+    // Locations for battle! Conflict! Stuff!
+    "locations": [
+        "forest", "mountains", "valley", "desert", "ruins", "cave", "dungeon", "tower"
+    ],
+
+    "themes": [
+        "silver", "gold", "misty", "fire", "frozen", "shadow", "mysterious", "abandoned"        
+    ]
+}

@@ -7,7 +7,7 @@
                 "Evil {antagonist} captures {person 1} at {town} and runs", // intro
                 "Confront antagonist at {location 1}",
                 "Confront antagonist at {location 2}",
-                "Final confrontation at {location 3 (epic)}", 
+                "Final confrontation at {location 3 @epic}", 
                 "Unlock treasure", // he tricks you into unlocking the treasure
                 "Unlock {beast}" // final battle, plus or minus variation
             ],
@@ -15,7 +15,7 @@
             "plotTwists": [
                 "{person 1} sacrifices themselves for you", // as only a parent would
                 "{person 1} escapes", // battle together
-                "{person 1} passes {skill (epic)} to you" // in-game skill, eg. 1000 slashes
+                "{person 1} passes {skill @epic} to you" // in-game skill, eg. 1000 slashes
             ]
         }
     ]
