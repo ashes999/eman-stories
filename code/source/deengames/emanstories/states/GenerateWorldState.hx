@@ -3,8 +3,8 @@ package deengames.emanstories.states;
 import flixel.FlxG;
 import flixel.text.FlxText;
 import quasar.core.QuasarState;
-import quasar.io.JsonParser;
 import deengames.emanstories.model.World;
+import deengames.emanstories.data.Repository;
 
 class GenerateWorldState extends QuasarState
 {    
@@ -15,9 +15,9 @@ class GenerateWorldState extends QuasarState
     override public function create()
     {
         super.create();
-        var world = new World(SEED_FOR_TESTING);
 
-        trace(JsonParser.parse("assets/data/stories.json"));
+        var repository = new Repository(openfl.Assets.getText("assets/data/stories.json"));
+        var world = new World(SEED_FOR_TESTING);
         
         this.statusText = new FlxText(0, 0, "", 32);
         this.statusText.text = 'Generating world ${world.seed} ...';
