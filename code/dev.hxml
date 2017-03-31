@@ -4,4 +4,4 @@
 -cp source
 -cp test
 
--neko build/neko_test.n
+-js build/js_test.js

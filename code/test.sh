@@ -1,2 +1,2 @@
 #!/bin/sh
-haxelib run munit test
+haxelib run munit test dev.hxml

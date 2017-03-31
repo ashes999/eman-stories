@@ -1,2 +1,2 @@
 @echo off
-haxelib run munit test
+haxelib run munit test -hxml dev.hxml
