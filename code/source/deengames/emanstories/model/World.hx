@@ -3,6 +3,8 @@ package deengames.emanstories.model;
 import de.polygonal.core.math.random.RNG;
 import de.polygonal.core.math.random.ParkMiller;
 
+import deengames.emanstories.data.Repository;
+
 class World
 {
     public static var instance(default, null):World; // not really singleton
@@ -14,7 +16,7 @@ class World
 
     private var seededRng:RNG;
 
-    public function new(seed:Int = -1)
+    public function new(repository:Repository, seed:Int = -1)
     {
         World.instance = this;
         
@@ -25,5 +27,19 @@ class World
 
         this.seed = seed;
         this.seededRng = new ParkMiller(this.seed);
+
+        // for testing
+        var numLocations:Int = 2;
+
+        for (i in 0 ... numLocations)
+        {
+            var index = Math.floor(seededRng.randomFloat() * repository.locationNames.length);
+            var locationName = repository.locationNames[index];
+
+            index = Math.floor(seededRng.randomFloat() * repository.locationThemes.length);
+            var locationTheme = repository.locationThemes[index];
+
+            trace('${locationTheme} ${locationName}');
+        }
     }
 }

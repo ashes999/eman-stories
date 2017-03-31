@@ -16,8 +16,11 @@ class GenerateWorldState extends QuasarState
     {
         super.create();
 
-        var repository = new Repository(openfl.Assets.getText("assets/data/stories.json"));
-        var world = new World(SEED_FOR_TESTING);
+        var repository = new Repository(
+            openfl.Assets.getText("assets/data/stories.json"), openfl.Assets.getText("assets/data/locations.json")
+        );
+
+        var world = new World(repository, SEED_FOR_TESTING);
         
         this.statusText = new FlxText(0, 0, "", 32);
         this.statusText.text = 'Generating world ${world.seed} ...';
