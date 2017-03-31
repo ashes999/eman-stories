@@ -10,4 +10,4 @@ install:
   - haxelib list
 script:
   - cd code
-  - haxelib run munit test
+  - haxelib run munit test neko
