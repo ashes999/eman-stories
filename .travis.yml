@@ -1,0 +1,13 @@
+language: haxe
+haxe:
+  - "3.4.2"
+neko: "2.1.0"
+install:
+  - haxelib install munit > /dev/null
+  - haxelib install polygonal-core > /dev/null
+  - haxelib install flixel > /dev/null
+  - haxelib install flixel-addons >/dev/null
+  - haxelib list
+script:
+  - cd code
+  - haxelib run munit test
