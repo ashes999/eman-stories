@@ -1,7 +1,0 @@
--main TestMain
--lib munit
--lib polygonal-core
--cp source
--cp test
-
--js build/js_test.js
