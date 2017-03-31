@@ -1,7 +1,5 @@
 package quasar.io;
 
-import openfl.Assets;
-
 // static class
 class JsonParser
 {

@@ -1,4 +1,5 @@
 package deengames.emanstories.data;
+
 import quasar.io.JsonParser;
 
 class Repository
@@ -8,6 +9,5 @@ class Repository
     public function new(storiesJson:String):Void
     {
         this.stories = JsonParser.parse(storiesJson);
-        trace(this.stories);
     }
 }

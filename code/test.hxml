@@ -1,7 +1,7 @@
 ## JavaScript
 -main TestMain
 -lib munit
--lib hamcrest
+-lib polygonal-core
 -cp source
 
 -cp test
