@@ -3,8 +3,13 @@
 -lib polygonal-core
 -cp source
 -cp test
-
 -neko build/neko_test.n
---next
--js build/js_test.js
 
+--next
+
+-main TestMain
+-lib munit
+-lib polygonal-core
+-cp source
+-cp test
+-js build/js_test.js

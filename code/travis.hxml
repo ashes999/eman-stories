@@ -1,0 +1,8 @@
+-main TestMain
+-lib munit
+-lib polygonal-core
+-cp source
+-cp test
+
+-neko build/neko_test.n
+
