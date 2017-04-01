@@ -31,10 +31,7 @@ class World
 
         this.story = this.randomItem(repository.stories);
 
-        // for testing
-        var numLocations:Int = 2;
-
-        for (i in 0 ... numLocations)
+        for (i in 0 ... this.story.locations.length)
         {
             var locationName = this.randomItem(repository.locationNames);
             var locationTheme = this.randomItem(repository.locationThemes);
