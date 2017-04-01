@@ -8,6 +8,7 @@ import deengames.emanstories.data.Repository;
 class World
 {
     public static var instance(default, null):World; // not really singleton
+    private var story:Dynamic; // json
 
     private static inline var MAX_SEED:Int = 2000000000; // 2B
     // Represents a unique world (game), by means of a seed number.
@@ -28,18 +29,23 @@ class World
         this.seed = seed;
         this.seededRng = new ParkMiller(this.seed);
 
+        this.story = this.randomItem(repository.stories);
+
         // for testing
         var numLocations:Int = 2;
 
         for (i in 0 ... numLocations)
         {
-            var index = Math.floor(seededRng.randomFloat() * repository.locationNames.length);
-            var locationName = repository.locationNames[index];
-
-            index = Math.floor(seededRng.randomFloat() * repository.locationThemes.length);
-            var locationTheme = repository.locationThemes[index];
-
+            var locationName = this.randomItem(repository.locationNames);
+            var locationTheme = this.randomItem(repository.locationThemes);
             trace('${locationTheme} ${locationName}');
         }
+    }
+
+    // Uses seeded RNG
+    private function randomItem(array:Array<Dynamic>):Dynamic
+    {
+         var index = Math.floor(this.seededRng.randomFloat() * array.length);
+         return array[index];
     }
 }

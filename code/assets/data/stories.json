@@ -1,8 +1,10 @@
 {
-    "archtypes": [
+    "archtypes":
+    [
         {
             "summary": "An evil antagonist captures your parent, and races from dungeon to dungeon. You follow, determined to save them.",
-            "majorEvents": [
+            "majorEvents":
+            [
                 // These translate into a small set of in-game events
                 "Evil {antagonist} captures {person 1} at {town} and runs", // intro
                 "Confront antagonist at {location 1}",
@@ -11,8 +13,9 @@
                 "Unlock treasure", // he tricks you into unlocking the treasure
                 "Unlock {beast}" // final battle, plus or minus variation
             ],
-            // TODO
-            "plotTwists": [
+            // TODO: different one each time you get this story
+            "plotTwists":
+            [
                 "{person 1} sacrifices themselves for you", // as only a parent would
                 "{person 1} escapes", // battle together
                 "{person 1} passes {skill @epic} to you" // in-game skill, eg. 1000 slashes

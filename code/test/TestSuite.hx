@@ -1,8 +1,8 @@
 import massive.munit.TestSuite;
 
-import ExampleTest;
-import deengames.emanstories.model.WorldTest;
 import deengames.emanstories.data.RepositoryTest;
+import deengames.emanstories.model.WorldTest;
+import ExampleTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -16,8 +16,8 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
-		add(ExampleTest);
-		add(deengames.emanstories.model.WorldTest);
 		add(deengames.emanstories.data.RepositoryTest);
+		add(deengames.emanstories.model.WorldTest);
+		add(ExampleTest);
 	}
 }
