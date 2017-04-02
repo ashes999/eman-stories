@@ -4,7 +4,7 @@ Crafty.c('StatusBar', {
   },
 
   show: function(message) {
-    this.text(message).size(720, 36);
+    this.text(message).size(960, 36);
   }
 });
 
@@ -81,7 +81,7 @@ Crafty.c('Button', {
 
 Game = {
   start: function() {
-    Crafty.init(720, 405);
+    Crafty.init(960, 540);
     Crafty.enterScene("Selection");
   },
 
