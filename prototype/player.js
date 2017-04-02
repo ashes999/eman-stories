@@ -49,6 +49,9 @@ Crafty.c('Player', {
           return randomBetween(3, 6); // 13-26 (average is 20)
         case "S":
           return randomBetween(1, 2); // 9-18 (average is 14)
+        default:
+          // Combos disabled
+          return randomBetween(4, 6);
     }
   },
 
@@ -67,9 +70,9 @@ Crafty.c('Player', {
   },
 
   updateComboText: function() {
-    var comboString = this.getComboString();
-    var cost = this.getComboCost();
-    Crafty('ComboText').text("Combo: " + comboString + " (" + cost + ")");
+      var comboString = this.getComboString();
+      var cost = this.getComboCost();
+      Crafty('ComboText').text("Combo: " + comboString + " (" + cost + ")");
   },
 
   getComboString: function() {
@@ -109,39 +112,57 @@ Crafty.c('Player', {
   attack: function(attack) {
     if (this.target == null) {
       Crafty('StatusBar').show("Select a target first!");
-    }
-    else if (this.enqueue(attack)) {
-      var combo = this.isComboStrike();
-      if (combo != null) {
-        Crafty('TimingBar').show();
+    } else if (config("enable_combos") == true) {
+      if (this.enqueue(attack)) {
+        var combo = this.isComboStrike();
+        if (combo != null) {
+          Crafty('TimingBar').show();
+        } else {
+          this.finishAttack();
+        }
       } else {
-        this.finishAttack();
+        Crafty('StatusBar').show('Not enough energy!');
       }
     } else {
-      Crafty('StatusBar').show('Not enough energy!');
+      // Trigger bar!
+      Crafty('TimingBar').show();
     }
   },
 
   // comboSuccess is triary: true (combo hit), false (combo missed), and null (no combo)
+  // If combos are disabled, comboSuccess is if we hit the trigger or not
   // Called on a regular attack, and combo (after hit or miss)
   finishAttack: function(comboSuccess) {
     // Attack is queued; it's the last move we did.
-    var attack = this.queue[this.queue.length - 1];
-    var damage = this.getDamage(attack);
-    var message = 'Player ' + attack + '-attacks ' + this.target.name + ' for ' + damage + ' damage!';
-    var hitOrMiss = 'SMASHED';
-    var combo = this.isComboStrike();
+    var attack;
+    if (config("enable_combos") == true) {
+      attack = this.queue[this.queue.length - 1];        
+      var damage = this.getDamage(attack);
+      var message = 'Player ' + attack + '-attacks ' + this.target.name + ' for ' + damage + ' damage!';
+      var hitOrMiss = 'SMASHED';
+      var combo = this.isComboStrike();
 
-    if (typeof(comboSuccess) !== "undefined" && comboSuccess != null) {
-      // Combo hit or missed
-      if (comboSuccess == true) {
-        damage += combo.damage;
-      } else {
-        damage += Math.round(combo.damage *= 0.5);
-        hitOrMiss = 'grazed';
+      if (typeof(combo) !== "undefined" && combo != null && typeof(comboSuccess) !== "undefined" && comboSuccess != null) {
+        // Combo hit or missed
+        if (comboSuccess == true) {
+          damage += combo.damage;
+        } else {
+          damage += Math.round(combo.damage *= 0.5);
+          hitOrMiss = 'grazed';
+        }
+
+        message = 'Player ' + hitOrMiss + " a " + combo.name + " on " + this.target.name + " for " + damage + ' damage!';
       }
-
-      message = 'Player ' + hitOrMiss + " a " + combo.name + " on " + this.target.name + " for " + damage + ' damage!';
+    } else {
+      var damage = this.getDamage(attack); // only real duplicated line
+      var verb;
+      if (comboSuccess == true) {
+        verb = "SMASHES"
+        damage *= 1.5;
+      } else {
+        verb = "attacks"
+      }
+      var message = 'Player ' + verb + ' ' + this.target.name + ' for ' + damage + ' damage!';
     }
 
     if (this.target != null && this.target.hp <= 0) {
@@ -150,13 +171,17 @@ Crafty.c('Player', {
 
     this.target.hp -= damage;
     this.target.refresh();
-    this.updateComboText();
 
-    Crafty('StatusBar').show(message);
-
-    if (this.getComboCost() == config('max_energy')) {
+    if (config("enable_combos") == true) {
+      this.updateComboText();
+      if (this.getComboCost() == config('max_energy')) {
+        Game.endPlayerTurn();
+      }
+    } else {
       Game.endPlayerTurn();
     }
+
+    Crafty('StatusBar').show(message);    
   },
 
   // Return a combo object if the last attack ignited a combo

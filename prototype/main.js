@@ -76,6 +76,7 @@ Crafty.c('Button', {
     .click(function() {
       Crafty('Player').attack(attack);
     });
+    return this;
   }
 });
 

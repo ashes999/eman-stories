@@ -11,10 +11,15 @@ Crafty.defineScene('Battle', function(properties) {
     e.colour = properties.color;
   }
 
-  Crafty.e('Button').move(25, 300).color('#ffffaa').button('S');
-  Crafty.e('Button').move(100, 300).color('#ffff66').button('M');
-  Crafty.e('Button').move(175, 300).color('#ffff00').button('L');
-  Crafty.e('Actor, Text2, ComboText').move(350, 300).text('Combo: 0')
+  if (config('enable_combos') == true)
+  {
+    Crafty.e('Button').move(25, 300).color('#ffffaa').button('S');
+    Crafty.e('Button').move(100, 300).color('#ffff66').button('M');
+    Crafty.e('Button').move(175, 300).color('#ffff00').button('L');  
+    Crafty.e('Actor, Text2, ComboText').move(350, 300).text('Combo: 0')
+  } else {
+    Crafty.e('Button').move(100, 300).color('#ffff66').button('Attack');
+  }
   Crafty.e('TimingBar');
 });
 
