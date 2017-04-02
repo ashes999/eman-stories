@@ -10,8 +10,8 @@ Crafty.c('StatusBar', {
 
 Crafty.c('TimingBar', {
   init: function() {
-    this.requires('Actor').color('white').size(675, 15).move(25, 370);
-    this.hitArea = Crafty.e('Actor').color('purple').size(100, 25).move(500, 365);
+    this.requires('Actor').color('white').size(915, 15).move(25, 370);
+    this.hitArea = Crafty.e('Actor').color('purple').size(100, 25).move(740, 365);
     var self = Crafty('TimingBar');
     this.hide();
   },
