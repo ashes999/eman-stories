@@ -85,6 +85,7 @@ Crafty.c('Bee', {
 
   attack: function(wasBlocked) {
     var damage = this.getDamage();
+    
     var message = 'attacks'
     if (randomBetween(1, 100) <= config('bee_poison_percent')  && !wasBlocked) {
       message += ' and poisons';
@@ -97,6 +98,12 @@ Crafty.c('Bee', {
         });
       }
     }
+
+    if (wasBlocked) {
+      damage = Math.round(damage * config("blocked_attack_damage_percent"));
+      message += " (blocked)";
+    }
+
     Crafty('Player').hurt(damage);
     Crafty('StatusBar').show(this.name + " " + message + " for " + damage + " health.");
   },

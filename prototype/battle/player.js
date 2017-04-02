@@ -158,7 +158,7 @@ Crafty.c('Player', {
       var verb;
       if (comboSuccess == true) {
         verb = "SMASHES"
-        damage *= 1.5;
+        damage = Math.round(damage * 1.5);
       } else {
         verb = "attacks"
       }
