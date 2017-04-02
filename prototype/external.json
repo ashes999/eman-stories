@@ -1,0 +1,18 @@
+externs = {
+  "max_energy": 9,
+  "combo_time_seconds": 0.8,
+  "combos": [
+    // Current methodology: combo damage = cost * 2
+    // Note you can chain the first and second together ...
+    { "name": "one-two", "moves": "SSM", "damage": 8 },
+    { "name": "steel fist", "moves": "ML", "damage": 10 },
+    { "name": "sucker punch", "moves": "MSL", "damage": 12 }
+  ],
+  "enemy_ui_delay": 1.5,
+  "enemy_critical_percent": 10,
+  "bee_poison_percent": 10, // bees can poison
+  "bee_poison_damage": 10,
+  "slime_split_percent": 30,
+  // 0 to block all damage on successful block, 1.0 to block nothing
+  "blocked_attack_damage_percent": 0.6
+}
