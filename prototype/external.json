@@ -1,4 +1,7 @@
 externs = {
+  // feature toggles
+  "enable_combos": false,
+
   "max_energy": 9,
   "combo_time_seconds": 0.8,
   "combos": [

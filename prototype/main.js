@@ -98,7 +98,7 @@ Game = {
       // Wait before any attacks
       Crafty('StatusBar').show('Monsters turn!');
       wait(1, function() {
-        foreach('Enemy', function(i, enemy) {
+        Crafty.forEach('Enemy', function(enemy, i) {
           // A hack, wrapped in a kludge, wrapped in a delicious pastry shell ...
           // Account for the time it takes to block/hit, too (timing bar)
           enemy.after(i * (config('enemy_ui_delay') + config('combo_time_seconds')), function() {
@@ -127,7 +127,7 @@ Game = {
 
   // private
   setUiVisible: function(boolValue) {
-    foreach('Button', function(i, b) {
+    Crafty.forEach('Button', function(b, i) {
       b.visible = boolValue;
     });
     Crafty('ComboText').visible = boolValue;
