@@ -17,7 +17,12 @@ Crafty.defineScene('Battle', function(properties) {
         Crafty.e('Button').move(175, 300).color('#ffff00').button('L');    
         Crafty.e('Actor, Text2, ComboText').move(350, 300).text('Combo: 0')
     } else {
-        Crafty.e('Button').move(100, 300).color('#ffff66').button('Attack');
+        var attackButton = Crafty.e('Button').move(100, 300).color('#ffff66')
+        .button('Attack', function() {
+            if (Crafty("Player").target != null) {
+                attackButton.visible = false;
+            }
+        });
     }
     Crafty.e('TimingBar');
 });
@@ -34,10 +39,10 @@ Game.endPlayerTurn = function() {
     
     self.hideUi();
 
-    wait(1, function() {
+    Crafty.wait(1, function() {
         // Wait before any attacks
         Crafty('StatusBar').show('Monsters turn!');
-        wait(1, function() {
+        Crafty.wait(1, function() {
             Crafty.forEach('Enemy', function(enemy, i) {
                 // A hack, wrapped in a kludge, wrapped in a delicious pastry shell ...
                 // Account for the time it takes to block/hit, too (timing bar)
@@ -48,7 +53,7 @@ Game.endPlayerTurn = function() {
             });
         });
 
-        wait(Crafty('Enemy').length * (config('enemy_ui_delay') + config('combo_time_seconds')) + 1, function() {
+        Crafty.wait(Crafty('Enemy').length * (config('enemy_ui_delay') + config('combo_time_seconds')) + 1, function() {
             self.showUi();
             Game.currentEnemy = null;
             Game.turn = 'player';
@@ -146,10 +151,13 @@ Crafty.c('Button', {
         this.requires('Actor, Text2');
     },
 
-    button: function(attack) {
+    button: function(attack, callback) {
         this.text(attack).size(50, 50)
         .click(function() {
             Crafty('Player').attack(attack);
+            if (callback != null) {
+                callback();
+            }
         });
         return this;
     }
