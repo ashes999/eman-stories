@@ -1,3 +1,4 @@
+// Misc scenes that don't really fit in anywhere
 Crafty.defineScene('Selection', function() {
   Crafty.background('black');
   Crafty.e('Actor, Text2').color('red').text("Slimes").size(50, 50).move(50, 50).click(function() {
