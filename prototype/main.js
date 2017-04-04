@@ -1,16 +1,10 @@
-Game = {
+Game = {  
   start: function() {
+    TESTING_UNIVERSE_SEED = "eman stories";
     Crafty.init(960, 540);
     Crafty.enterScene("Selection");
-    Game.seedRng(1024768);
-  },
 
-  seedRng: function(seed) {
-    Game.seededRng = new Math.seedrandom(seed);
-  },
-
-  seededRandomBetween: function(a, b) {
-    return Math.floor(Game.seededRng() * (b - a)) + a;
+    SeededRng.setSeed(TESTING_UNIVERSE_SEED);
   }
 }
 
