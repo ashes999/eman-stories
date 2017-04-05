@@ -1,6 +1,6 @@
 Game = {    
     start: function() {
-        TESTING_UNIVERSE_SEED = 12345;
+        TESTING_UNIVERSE_SEED = 1;
 
         Crafty.init(960, 540);
         SeededRng.setSeed(TESTING_UNIVERSE_SEED);

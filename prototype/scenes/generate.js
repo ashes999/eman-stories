@@ -9,27 +9,40 @@ Crafty.defineScene('WorldGeneration', function() {
         "Laylah, a hijab-clad tomboy of a girl adept at stick-fighting and wrestling",
         "AlHabash, the dark-skinned son of a slave with an affinity for animals"
     ];
+    
 
     // TODO: link these to a sprite
-    var nemses = [ "Evil Wizard", "Dark Lich", "Red Knight"];
+    var nemeses = [ "Evil Wizard", "Dark Lich", "Red Knight"];
 
     var stories = [
         {
-            "intro": ["Your father, the last guardian of the ancient Sword of Eman, gets murdered by {nemesis}.",
-                      "His final letter to you urges you to travel to the Lost Masajid and recharge the sword so",
+            "intro": ["Your father, the last guardian of the ancient Sword of Eman, gets murdered. Your father's",
+                      "final letter to you urges you to travel to the Lost Masajid and recharge the sword so that",
                       "you can defeat this fiend!"],
 
             "endingTwists": [
-                "{nemsis} was your childhood friend who disappeared!",
+                "{nemesis} was your childhood friend who disappeared!",
                 "The sword is just a piece of metal. Determination and du'a mde it work ...",
+            ]
+        },
+        {
+            "intro": ["An ancient evil awakens. You arrive home one day after herding sheep to discover that",
+                      " your village was razed to the ground, and your family crest taken. Find the person",
+                      " who did this!"],
+
+            "endingTwists": [
+                "This evil rose due to the sins of our nations. We fed this beast.",
+                "{nemesis} did this because his family died. He wanted revenge on the world, and on God.",
             ]
         }
     ];
 
     // "Generate" world
     var protagonist = SeededRng.random(protagonists);
+    var nemesis = SeededRng.random(nemeses);
     var story = SeededRng.random(stories);
-    var plotTwist = SeededRng.random(story.endingTwists);
+    // Replaces the first {nemesis} with the actual nemesis name.
+    var plotTwist = SeededRng.random(story.endingTwists).replace("{nemesis}", nemesis);
 
     Crafty.e("WhiteText").text("World #" + SeededRng.getSeed());
 
