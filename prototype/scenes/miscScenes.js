@@ -8,4 +8,12 @@ Crafty.defineScene('Title', function() {
     .click(function() {
       Crafty.enterScene('WorldGeneration');
     });
+
+    Crafty.e('Actor, Text2').color('green').text("Test Battle: Slimes").move(750, 50).click(function() {
+      Crafty.enterScene('Battle', { name: 'Slime', color: '#880000' });
+    });
+
+    Crafty.e('Actor, Text2').color('#dd9900').text("Test Battle: Bees").move(750, 100).click(function() {
+      Crafty.enterScene('Battle', { name: 'Bee', color: '#008800' });
+    });
 });
