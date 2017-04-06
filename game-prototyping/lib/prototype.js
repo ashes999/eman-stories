@@ -5,7 +5,7 @@ function loadScript(url, callback)
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'application/javascript';
-    if (url.indexOf('.json') == -1) {
+    if (url.indexOf('.json') === -1 && typeof(window.prototypePath) !== "undefined") {
         script.src = (window.prototypePath || '') + url;
     } else {
       script.src = url;

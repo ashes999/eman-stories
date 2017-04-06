@@ -9,4 +9,15 @@ Game = {
     }
 }
 
+window.prototypePath = ""; // don't load from within ../game-prototyping
+
+loadScript("scenes/miscScenes.js");
+loadScript("scenes/generateScene.js");
+
+loadScript("battle/monster.js");
+loadScript("battle/player.js");
+loadScript("battle/battleScene.js");
+
+loadScript("map/mapScene.js");
+
 window.addEventListener('load', Game.start);
