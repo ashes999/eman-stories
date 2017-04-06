@@ -5,7 +5,7 @@ Game = {
         Crafty.init(960, 540);
         SeededRng.setSeed(TESTING_UNIVERSE_SEED);
 
-        Crafty.enterScene("WorldGeneration");        
+        Crafty.enterScene("Title");        
     }
 }
 

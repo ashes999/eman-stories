@@ -6,8 +6,8 @@ Crafty.defineScene('WorldGeneration', function() {
     // TODO: link these to a sprite
     var protagonists = [
         "Ahmad, a small, scrawny boy who spent more time with books than people",
-        "Laylah, a hijab-clad tomboy of a girl adept at stick-fighting and wrestling",
-        "AlHabash, the dark-skinned son of a slave with an affinity for animals"
+        "Fatimah, a hijab-clad tomboy of a girl adept at stick-fighting and wrestling",
+        "Zubair, the dark-skinned son of a slave with an affinity for animals"
     ];
     
 
@@ -27,7 +27,7 @@ Crafty.defineScene('WorldGeneration', function() {
         },
         {
             "intro": ["An ancient evil awakens. You arrive home one day after herding sheep to discover that",
-                      " your village was razed to the ground, and your family crest taken. Find the person",
+                      " your village was razed to the ground, and your family heirloom taken. Find the person",
                       " who did this!"],
 
             "endingTwists": [
@@ -54,6 +54,11 @@ Crafty.defineScene('WorldGeneration', function() {
     }
 
     console.log("Plot twist: " + plotTwist);
+
+    Crafty.e("Actor, Text2").color("#008800").text("Begin").size(160, 60).move(150, 450).fontSize(24)
+        .click(function() {
+            Crafty.enterScene('Map');
+        });
 });
 
 Crafty.c("WhiteText", {

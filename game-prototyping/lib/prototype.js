@@ -32,7 +32,7 @@ loadScript('lib/helpers.js');
 loadScript('lib/crafty-extensions.js');
 loadScript('lib/actor.js');
 loadScript('lib/configuration.js');
-loadScript('lib/console.js');
+//loadScript('lib/console.js');
 loadScript('lib/random.js');
 loadScript('lib/spawner.js');
 loadScript('lib/3rdparty/seedrandom.min.js');
