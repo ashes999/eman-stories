@@ -15,7 +15,7 @@ loadScript("scenes/miscScenes.js");
 loadScript("scenes/generateScene.js");
 
 loadScript("battle/monster.js");
-loadScript("battle/player.js");
+loadScript("battle/battlePlayer.js");
 loadScript("battle/battleScene.js");
 
 loadScript("map/mapScene.js");

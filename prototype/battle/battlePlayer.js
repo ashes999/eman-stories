@@ -1,4 +1,4 @@
-Crafty.c('Player', {
+Crafty.c("BattlePlayer", {
   init: function() {
     this.target = null;
     this.queue = [];

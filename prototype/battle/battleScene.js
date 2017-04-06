@@ -1,8 +1,8 @@
 Crafty.defineScene('Battle', function(properties) {
-    Game.turn = 'player';
+    Game.turn = "BattlePlayer";
     Crafty.background('#4A4');
     Crafty.e('StatusBar').show('The battle begins!');
-    Crafty.e('Player');
+    Crafty.e("BattlePlayer");
 
     var n = randomBetween(2, 4);
     for (var i = 0; i < n; i++) {
@@ -18,7 +18,7 @@ Crafty.defineScene('Battle', function(properties) {
     } else {
         var attackButton = Crafty.e('Button').move(100, 300).color('#ffff66')
         .button('Attack', function() {
-            if (Crafty("Player").target != null) {
+            if (Crafty("BattlePlayer").target != null) {
                 attackButton.visible = false;
             }
         });
@@ -29,7 +29,7 @@ Crafty.defineScene('Battle', function(properties) {
 Game.endPlayerTurn = function() {
     var self = this;
     this.turn = 'enemy';
-    var player = Crafty('Player');
+    var player = Crafty("BattlePlayer");
 
     if (config("enable_combos") == true) {
         player.queue = [];
@@ -55,14 +55,14 @@ Game.endPlayerTurn = function() {
         Crafty.wait(Crafty('Enemy').length * (config('enemy_ui_delay') + config('combo_time_seconds')) + 1, function() {
             self.showUi();
             Game.currentEnemy = null;
-            Game.turn = 'player';
+            Game.turn = "BattlePlayer";
         });
     });
 }
 
 Game.hideUi = function() {
     this.setUiVisible(false);
-    Crafty('Player').select(null);
+    Crafty("BattlePlayer").select(null);
 }
 
 Game.showUi = function() {
@@ -101,15 +101,15 @@ Crafty.c('TimingBar', {
         if (this.hitBox != null && this.hitBox.attr('x') >= this.hitArea.attr('x') &&
             this.hitBox.attr('x') + this.hitBox.attr('w') <= this.hitArea.attr('x') + this.hitArea.attr('w')) {
                 // SUCCESS!
-                if (Game.turn == 'player') {
-                    Crafty('Player').finishAttack(true);
+                if (Game.turn == "BattlePlayer") {
+                    Crafty("BattlePlayer").finishAttack(true);
                 } else {
                     Game.currentEnemy.attack(true);
                 }
             } else {
                 // Missed.
-                if (Game.turn == 'player') {
-                    Crafty('Player').finishAttack(false);
+                if (Game.turn == "BattlePlayer") {
+                    Crafty("BattlePlayer").finishAttack(false);
                 } else {
                     Game.currentEnemy.attack(false);
                 }
@@ -135,8 +135,8 @@ Crafty.c('TimingBar', {
         self.hitBox = Crafty.e('Actor').size(25, 25).color('red').move(this.attr('x'), this.attr('y'))
             .tween({ x: this.attr('x') + this.attr('w') - 25 }, comboTime).after(comboTime + 0.1, function() {
                 // Didn't click in time
-                if (Game.turn == 'player') {
-                    Crafty('Player').finishAttack(false);
+                if (Game.turn == "BattlePlayer") {
+                    Crafty("BattlePlayer").finishAttack(false);
                 } else {
                     Game.currentEnemy.attack(false);
                 }
@@ -153,7 +153,7 @@ Crafty.c('Button', {
     button: function(attack, callback) {
         this.text(attack).size(50, 50)
         .click(function() {
-            Crafty('Player').attack(attack);
+            Crafty("BattlePlayer").attack(attack);
             if (callback != null) {
                 callback();
             }

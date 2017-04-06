@@ -20,7 +20,7 @@ Crafty.c('Enemy', {
     self.hp = 30;
     self.refresh();
     this.click(function() {
-      Crafty('Player').select(self);
+      Crafty("BattlePlayer").select(self);
     });
   },
 
@@ -29,7 +29,7 @@ Crafty.c('Enemy', {
     this.size(60, 40);
     if (this.hp <= 0) {
       this.destroy();
-      Crafty('Player').target = null;
+      Crafty("BattlePlayer").target = null;
     }
   }
 
@@ -66,7 +66,7 @@ Crafty.c('Slime', {
         }
         damage = Math.round(damage * config('blocked_attack_damage_percent'));
       }
-      Crafty('Player').hurt(damage);
+      Crafty("BattlePlayer").hurt(damage);
       Crafty('StatusBar').show(this.name + " " + message + " for " + damage + " health.");
     }
   },
@@ -94,7 +94,7 @@ Crafty.c('Bee', {
       var poisonDamage = config('bee_poison_damage');
       for (var i = 0; i < 5; i++) {
         wait(i + 1, function() {
-          Crafty('Player').hurt(poisonDamage / 5);
+          Crafty("BattlePlayer").hurt(poisonDamage / 5);
         });
       }
     }
@@ -104,7 +104,7 @@ Crafty.c('Bee', {
       message += " (blocked)";
     }
 
-    Crafty('Player').hurt(damage);
+    Crafty("BattlePlayer").hurt(damage);
     Crafty('StatusBar').show(this.name + " " + message + " for " + damage + " health.");
   },
 
