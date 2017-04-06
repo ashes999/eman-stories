@@ -19,5 +19,6 @@ loadScript("battle/battlePlayer.js");
 loadScript("battle/battleScene.js");
 
 loadScript("map/mapScene.js");
+loadScript("map/player.js");
 
 window.addEventListener('load', Game.start);
