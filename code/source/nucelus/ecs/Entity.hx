@@ -8,6 +8,7 @@ class Entity
 
     // One component per type. Map the name to the component.
     private var components = new Map<String, Component>();
+    private var eventCallbacks = new Map<String, Void->Void>();
 
     public function new() { }
 
@@ -18,12 +19,26 @@ class Entity
             // a.b.c => c
             type = type.substr(type.lastIndexOf(".") + 1);
         }
-        trace('put ${type} => ${component}!');
         this.components.set(type, component);
     }
 
     public function get(type:String):Component
     {
         return this.components.get(type);
+    }
+
+    public function bind(event:String, callback:Void->Void):Void
+    {
+        this.eventCallbacks.set(event.toLowerCase(), callback);
+    }
+
+    // internal
+    public function onEvent(event:String):Void
+    {
+        var callback = this.eventCallbacks.get(event.toLowerCase());
+        if (callback != null)
+        {
+            callback();
+        }
     }
 }

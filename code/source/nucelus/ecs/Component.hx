@@ -8,4 +8,9 @@ class Component
     {
         this.parent = parent;
     }
+
+    public function trigger(event:String):Void
+    {
+        this.parent.onEvent(event);
+    }
 }

@@ -27,4 +27,25 @@ class EntityTest
         var actual = e.get("Component");
         Assert.areEqual(expected, actual);
 	}
+
+    @Test
+    public function bindCausesCallbacksToTrigger():Void
+    {
+        var e = new Entity();
+        var health = new Component(e);
+        var timesInvoked = 0;
+
+        e.bind("Death", function() {
+            timesInvoked += 1;
+        });
+
+        health.trigger("Death");
+        
+        // Case-insensitive!
+        health.trigger("dEAtH");
+
+        health.trigger("derp");
+
+        Assert.areEqual(2, timesInvoked);
+    }
 }
