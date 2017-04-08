@@ -10,12 +10,11 @@ class RepositoryTest
     @Test
     public function constructorPopulatesDataFromJson():Void
     {
-        var storiesJson = '{ "archtypes": [ { "summary": "unleash ancient weapon in time to save the world" } ] }';
+        var storiesJson = '{ "archtypes": [ { "summary": "unleash ancient weapon in time to save the world", "majorEvents": [] } ] }';
         var locationsJson = '{ "locations": [ "mountains", "valley" ], "themes": [ "fire", "mysterious" ] }';
         
         var actual = new Repository(storiesJson, locationsJson);
         
-        Assert.areEqual(actual.stories.archtypes[0].summary, "unleash ancient weapon in time to save the world");
         this.assertEqualStringArrays(actual.locationNames, ["mountains", "valley"]);
         this.assertEqualStringArrays(actual.locationThemes, ["fire", "mysterious"]);
     }
