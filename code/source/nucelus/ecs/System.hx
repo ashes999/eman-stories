@@ -35,4 +35,9 @@ class System
     {
         entities.remove(e);
     }
+
+    public function update(elapsedSeconds:Float):Void
+    {
+        // Override plzkthx
+    }
 }

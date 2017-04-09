@@ -27,4 +27,12 @@ class Container
             system.removeEntity(e);
         }
     }
+
+    public function update(elapsedSeconds:Float):Void
+    {
+        for (system in this.systems)
+        {
+            system.update(elapsedSeconds);
+        }
+    }
 }

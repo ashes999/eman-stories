@@ -34,7 +34,8 @@ class BaseEntity
 
     public function get(type:String):Component
     {
-        return this.components.get(type);
+        var toReturn:Component = this.components.get(type);
+        return toReturn;
     }
 
     public function bind(event:String, callback:Void->Void):Void
