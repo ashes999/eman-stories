@@ -2,9 +2,9 @@ package nucelus.ecs;
 
 class Component
 {
-    private var parent:Entity;
+    private var parent:BaseEntity;
 
-    public function new(parent:Entity)
+    public function new(parent:BaseEntity)
     {
         this.parent = parent;
     }

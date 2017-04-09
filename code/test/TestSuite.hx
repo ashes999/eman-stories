@@ -2,7 +2,7 @@ import massive.munit.TestSuite;
 
 import deengames.emanstories.data.RepositoryTest;
 import deengames.emanstories.model.WorldTest;
-import nucelus.ecs.EntityTest;
+import nucelus.ecs.BaseEntityTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -18,6 +18,6 @@ class TestSuite extends massive.munit.TestSuite
 
 		add(deengames.emanstories.data.RepositoryTest);
 		add(deengames.emanstories.model.WorldTest);
-		add(nucelus.ecs.EntityTest);
+		add(nucelus.ecs.BaseEntityTest);
 	}
 }

@@ -2,12 +2,12 @@ package nucelus.ecs;
 
 import massive.munit.Assert;
 
-class EntityTest
+class BaseEntityTest
 {
     @Test
 	public function getGetsAddedComponent():Void
 	{
-        var e = new Entity();
+        var e = new BaseEntity();
 		var expected = new Component(e);
         e.add(expected);
         
@@ -15,14 +15,15 @@ class EntityTest
         Assert.areEqual(expected, actual);
 	}
 
+    // Don't override if you call add again
     @Test
-	public function getGetsLastAddedComponent():Void
+	public function getGetsFirstAddedComponent():Void
 	{
-        var e = new Entity();
-		var wrong = new Component(e);
+        var e = new BaseEntity();
 		var expected = new Component(e);
-        e.add(wrong);
+		var wrong = new Component(e);
         e.add(expected);
+        e.add(wrong);
         
         var actual = e.get("Component");
         Assert.areEqual(expected, actual);
@@ -31,7 +32,7 @@ class EntityTest
     @Test
     public function bindCausesCallbacksToTrigger():Void
     {
-        var e = new Entity();
+        var e = new BaseEntity();
         var health = new Component(e);
         var timesInvoked = 0;
 
