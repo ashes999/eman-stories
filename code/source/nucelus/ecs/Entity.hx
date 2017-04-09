@@ -4,5 +4,8 @@ package nucelus.ecs;
 // eg. .sprite(...) adds a sprite component/system as necessary.
 class Entity extends BaseEntity
 {
-
+    public function new()
+    {
+        super();
+    }
 }

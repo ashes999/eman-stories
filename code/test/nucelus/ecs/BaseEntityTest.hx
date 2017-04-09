@@ -49,4 +49,17 @@ class BaseEntityTest
 
         Assert.areEqual(2, timesInvoked);
     }
+
+    @Test
+    public function hasReturnsTrueIfEntityHasComponent():Void
+    {
+        var e = new BaseEntity();
+        var c = new Component(e);
+        e.add(c);
+
+        Assert.isTrue(e.has("Component"));
+        
+        e.remove(c);
+        Assert.isFalse(e.has("Component"));
+    }
 }

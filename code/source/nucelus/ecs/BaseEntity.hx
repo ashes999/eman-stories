@@ -15,16 +15,21 @@ class BaseEntity
 
     public function add(component:Component):Void
     {
-        var type:String = Type.getClassName(Type.getClass(component));
-        if (type.indexOf(".") > -1) {
-            // a.b.c => c
-            type = type.substr(type.lastIndexOf(".") + 1);
-        }
-
+        var type:String = getKey(component);
         if (this.components.get(type) == null)
         {
             this.components.set(type, component);
         }
+    }
+
+    public function remove(component:Component):Void
+    {
+        this.components.remove(getKey(component));
+    }
+
+    public function has(type:String):Bool
+    {
+        return this.components.exists(type);
     }
 
     public function get(type:String):Component
@@ -45,5 +50,16 @@ class BaseEntity
         {
             callback();
         }
+    }
+
+    private function getKey(component:Component):String
+    {
+        var type:String = Type.getClassName(Type.getClass(component));
+        if (type.indexOf(".") > -1) {
+            // a.b.c => c
+            type = type.substr(type.lastIndexOf(".") + 1);
+        }
+
+        return type;
     }
 }
