@@ -1,4 +1,6 @@
-package nebula.ecs.component;
+package turbo.ecs.components;
+
+import turbo.ecs.Entity;
 
 import flixel.FlxSprite;
 
@@ -7,7 +9,15 @@ import flixel.FlxSprite;
 // here yet; it just saves us from using Dynamic.
 class AbstractComponent
 {
-    public function new()
+    private var parent:Entity;
+
+    public function new(parent:Entity)
     {
+        this.parent = parent;
+    }
+
+    public function trigger(event:String):Void
+    {
+        this.parent.onEvent(event);
     }
 }

@@ -1,24 +1,21 @@
-package nebula.ecs;
+package turbo.ecs;
 
-import nebula.ecs.component.AbstractComponent;
-import nebula.ecs.component.CameraComponent;
-import nebula.ecs.component.ColourComponent;
-import nebula.ecs.component.KeyboardInputComponent;
-import nebula.ecs.component.HealthComponent;
-import nebula.ecs.component.ImageComponent;
-import nebula.ecs.component.MouseClickComponent;
-import nebula.ecs.component.PositionComponent;
-import nebula.ecs.Container;
+import turbo.ecs.components.AbstractComponent;
+import turbo.ecs.components.ColourComponent;
+import turbo.ecs.components.HealthComponent;
+import turbo.ecs.components.ImageComponent;
+import turbo.ecs.components.PositionComponent;
+import turbo.ecs.components.KeyboardInputComponent;
+import turbo.ecs.components.CameraComponent;
+import turbo.ecs.components.MouseClickComponent;
 
 class Entity
 {
-    public var container(default, default):Container;
     private var components:Map<String, AbstractComponent>;
     private var tags(default, null):Array<String>;
     
     public function new()
     {
-        this.container = Container.instance;
         this.components = new Map<String, AbstractComponent>();
         this.tags = [];
     }
@@ -26,9 +23,12 @@ class Entity
     // You can only have one of each component by type
     public function add(component:AbstractComponent):Entity
     {
-        var name = Type.getClassName(Type.getClass(component));
-        this.components.set(name, component);
-        this.container.entityChanged(this);
+        var clazz = Type.getClass(component);
+        var name = Type.getClassName(clazz);
+        if (!this.has(clazz))
+        {
+            this.components.set(name, component);
+        }
         return this;
     }
     
@@ -40,14 +40,13 @@ class Entity
     {
         var name = Type.getClassName(clazz);
         this.components.remove(name);
-        this.container.entityChanged(this);
         return this;
     }
     
     // c is a Class<AbstractComponent> eg. SpriteComponent
-    public function get<T>(c:Class<T>):T
+    public function get<T>(clazz:Class<T>):T
     {
-        var name:String = Type.getClassName(c);
+        var name:String = Type.getClassName(clazz);
         var toReturn:AbstractComponent = this.components.get(name);
         
         if (toReturn == null)
@@ -56,7 +55,7 @@ class Entity
             // eg. asked for SpriteComponent when we have ImageComponent
             for (component in this.components)
             {
-                if (Std.is(component, c))
+                if (Std.is(component, clazz))
                 {
                     return cast(component);
                 }
@@ -66,9 +65,14 @@ class Entity
         return cast(toReturn);
     }
     
-    public function has(c:Class<AbstractComponent>):Bool
+    public function has(clazz:Class<AbstractComponent>):Bool
     {
-        return this.get(c) != null;
+        return this.get(clazz) != null;
+    }
+
+    public function onEvent(event:String):Void
+    {
+        // Override this in subclasses to handle events
     }
         
     ////////////////////// Start fluent API //////////////////////
@@ -79,51 +83,50 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(red, green, blue, 32, 32)); // default size
+            this.add(new ColourComponent(red, green, blue, 32, 32, this)); // default size
         }
         else
         {        
             var c = this.get(ColourComponent);
-            this.add(new ColourComponent(red, green, blue, c.width, c.height));
+            this.add(new ColourComponent(red, green, blue, c.width, c.height, this));
         }
         return this;
     }
     
     public function health(maximumHealth:Int):Entity
     {
-        this.add(new HealthComponent(maximumHealth));
+        this.add(new HealthComponent(maximumHealth, this));
         return this;
     }
     
     public function image(image:String, repeat:Bool = false):Entity
     {
-        this.add(new ImageComponent(image, repeat));
+        this.add(new ImageComponent(image, repeat, this));
         return this;
     }
     
     public function move(x:Int, y:Int):Entity
     {
-        this.add(new PositionComponent(x, y));
+        this.add(new PositionComponent(x, y, this));
         return this;
     } 
     
     // MoveSpeed is in pixels per second
     public function moveWithKeyboard(moveSpeed:Int):Entity
     {
-        this.add(new KeyboardInputComponent(moveSpeed));
+        this.add(new KeyboardInputComponent(moveSpeed, this));
         return this;
     }
     
     public function trackWithCamera():Entity
     {
-        this.add(new CameraComponent());
+        this.add(new CameraComponent(this));
         return this;
     }
     
-    public function onClick(callback:Float->Float->Void):Entity
+    public function onClick(callback:Void->Void):Entity
     {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent();
-        mouseComponent.registerCallBack(callback);
+        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, this);
         this.add(mouseComponent);
         return this;
     }
@@ -132,12 +135,14 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(255, 0, 0, width, height)); // default colour
+            this.add(new ColourComponent(255, 0, 0, width, height, this)); // default colour
         }
         else
         {
-            var c = this.get(ColourComponent);
-            this.add(new ColourComponent(c.red, c.green, c.blue, width, height));   
+            var c = this.get<ColourComponent>(ColourComponent);
+            var clr = c.colour;
+            this.remove(c);
+            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
         }        
         return this;
     }
