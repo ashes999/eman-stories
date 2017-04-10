@@ -2,24 +2,25 @@ package turbo.ecs.components;
 
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.FlxObject;
+import flixel.FlxG;
 import turbo.ecs.components.AbstractComponent;
 
 class MouseClickComponent extends AbstractComponent
 {
-    private var mouseDownCallback:Void->Void;
-    private var mouseUpCallback:Void->Void;
+    private var mouseDownCallback:Float->Float->Void;
+    private var mouseUpCallback:Float->Float->Void;
     
-    public function new(onMouseDown:Void->Void, onMouseUp:Void->Void = null, parent:Entity)
+    public function new(onMouseDown:Float->Float->Void, onMouseUp:Float->Float->Void = null, parent:Entity)
     {
         super(parent);
         if (parent.has(ImageComponent))
         {
-            var image = parent.get<ImageComponent>(ImageComponent);
+            var image = parent.get(ImageComponent);
             FlxMouseEventManager.add(image.sprite, this.mouseDown, this.mouseUp);
         }
         else if (parent.has(ColourComponent))
         {
-            var colour = parent.get<ColourComponent>(ColourComponent);
+            var colour = parent.get(ColourComponent);
             FlxMouseEventManager.add(colour.sprite, this.mouseDown, this.mouseUp);
         }
         else
@@ -32,15 +33,15 @@ class MouseClickComponent extends AbstractComponent
     {
         if (this.mouseDownCallback != null)
         {
-            this.mouseDownCallback();
+            this.mouseDownCallback(FlxG.mouse.x,FlxG.mouse.y);
         }
     }
 
-    private function onMouseUp(obj:FlxObject):Void
+    private function mouseUp(obj:FlxObject):Void
     {
         if (this.mouseUpCallback != null)
         {
-            this.mouseUpCallback();
+            this.mouseUpCallback(FlxG.mouse.x,FlxG.mouse.y);
         }
     }
 }

@@ -3,6 +3,7 @@ package turbo.ecs.components;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
+import flixel.input.FlxInput.FlxInputState;
 import turbo.ecs.components.AbstractComponent;
 
 class KeyboardInputComponent extends AbstractComponent
@@ -17,13 +18,13 @@ class KeyboardInputComponent extends AbstractComponent
 
     public function update(elapsedSeconds:Float):Void
     {
-        if (parent.has<PositionComponent>(PositionComponent)())
+        if (parent.has(PositionComponent))
         {
             var position:PositionComponent = parent.get(PositionComponent);        
                 
             var dx:Float = 0;
             var dy:Float = 0;
-            var movement:Float = component.moveSpeed * elapsed;
+            var movement:Float = this.moveSpeed * elapsedSeconds;
             
             if (isPressed(FlxKey.LEFT) || isPressed(FlxKey.A))
             {
@@ -46,5 +47,10 @@ class KeyboardInputComponent extends AbstractComponent
             position.x += dx;
             position.y += dy;
         }
+    }
+
+    private function isPressed(keyCode:Int)
+    {
+        return FlxG.keys.checkStatus(keyCode, FlxInputState.PRESSED);
     }
 }

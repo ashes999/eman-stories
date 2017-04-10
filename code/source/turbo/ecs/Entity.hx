@@ -124,7 +124,7 @@ class Entity
         return this;
     }
     
-    public function onClick(callback:Void->Void):Entity
+    public function onClick(callback:Float->Float->Void):Entity
     {
         var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, this);
         this.add(mouseComponent);
@@ -139,9 +139,9 @@ class Entity
         }
         else
         {
-            var c = this.get<ColourComponent>(ColourComponent);
+            var c = this.get(ColourComponent);
             var clr = c.colour;
-            this.remove(c);
+            this.remove(ColourComponent);
             this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
         }        
         return this;

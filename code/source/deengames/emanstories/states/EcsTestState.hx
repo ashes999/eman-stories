@@ -22,7 +22,7 @@ class EcsTestState extends QuasarState
         e = new Entity()
             .colour(255, 128, 0);
 
-        this.add(e.get<ColourComponent>(ColourComponent).sprite);
+        this.add(e.get(ColourComponent).sprite);
     }
 
     override public function update(elapsed:Float):Void
