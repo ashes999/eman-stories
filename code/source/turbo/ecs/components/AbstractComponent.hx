@@ -20,4 +20,18 @@ class AbstractComponent
     {
         this.parent.onEvent(event);
     }
+
+    // Events that come in from other components, to the parent, 
+    // then down to us.
+    public function onEvent(event:String):Void
+    {
+        // Override.
+    }
+
+    public function update(elapsedSeconds:Float):Void
+    {
+        // Override please. Here to avoid checking for
+        // specific component types that have .update
+        // in Entity.update
+    }
 }

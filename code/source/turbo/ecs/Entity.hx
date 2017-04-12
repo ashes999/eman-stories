@@ -19,6 +19,102 @@ class Entity
         this.components = new Map<String, AbstractComponent>();
         this.tags = [];
     }
+        
+    ////////////////////// Start fluent API //////////////////////
+    // Please sort alphabetically
+    
+    // Calling colour without calling size (or vice-versa) should give sensible results
+    // The default is a 32x32 red square
+    public function colour(red:Int, green:Int, blue:Int):Entity
+    {
+        if (!this.has(ColourComponent))
+        {
+            this.add(new ColourComponent(red, green, blue, 32, 32, this)); // default size
+        }
+        else
+        {        
+            var c = this.get(ColourComponent);
+            this.add(new ColourComponent(red, green, blue, c.width, c.height, this));
+        }
+
+        if (!this.has(PositionComponent))
+        {
+            this.add(new PositionComponent(0, 0, this));
+        }
+
+        return this;
+    }
+    
+    public function health(maximumHealth:Int):Entity
+    {
+        this.add(new HealthComponent(maximumHealth, this));
+        return this;
+    }
+    
+    public function image(image:String, repeat:Bool = false):Entity
+    {
+        this.add(new ImageComponent(image, repeat, this));
+        if (!this.has(PositionComponent))
+        {
+            this.add(new PositionComponent(0, 0, this));
+        }
+        return this;
+    }
+    
+    public function move(x:Int, y:Int):Entity
+    {
+        this.add(new PositionComponent(x, y, this));
+        
+        this.onEvent("Moved");
+
+        return this;
+    } 
+    
+    // MoveSpeed is in pixels per second
+    public function moveWithKeyboard(moveSpeed:Int):Entity
+    {
+        this.add(new KeyboardInputComponent(moveSpeed, this));
+        return this;
+    }
+    
+    public function onClick(callback:Float->Float->Void):Entity
+    {
+        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, this);
+        this.add(mouseComponent);
+        return this;
+    }
+    
+    public function size(width:Int, height:Int):Entity
+    {
+        if (!this.has(ColourComponent))
+        {
+            this.add(new ColourComponent(255, 0, 0, width, height, this)); // default colour
+        }
+        else
+        {
+            var c = this.get(ColourComponent);
+            var clr = c.colour;
+            this.remove(ColourComponent);
+            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
+        }        
+
+        if (!this.has(PositionComponent))
+        {
+            this.add(new PositionComponent(0, 0, this));
+        }
+
+        return this;
+    }
+
+    public function trackWithCamera():Entity
+    {
+        this.add(new CameraComponent(this));
+        return this;
+    }
+    
+    /////////////////////// End fluent API ///////////////////////
+
+
     
     // You can only have one of each component by type
     public function add(component:AbstractComponent):Entity
@@ -72,89 +168,17 @@ class Entity
 
     public function onEvent(event:String):Void
     {
-        // Override this in subclasses to handle events
-    }
-        
-    ////////////////////// Start fluent API //////////////////////
-    
-    // Calling colour without calling size (or vice-versa) should give sensible results
-    // The default is a 32x32 red square
-    public function colour(red:Int, green:Int, blue:Int):Entity
-    {
-        if (!this.has(ColourComponent))
+        for (component in this.components)
         {
-            this.add(new ColourComponent(red, green, blue, 32, 32, this)); // default size
+            component.onEvent(event);
         }
-        else
-        {        
-            var c = this.get(ColourComponent);
-            this.add(new ColourComponent(red, green, blue, c.width, c.height, this));
-        }
-        return this;
     }
-    
-    public function health(maximumHealth:Int):Entity
-    {
-        this.add(new HealthComponent(maximumHealth, this));
-        return this;
-    }
-    
-    public function image(image:String, repeat:Bool = false):Entity
-    {
-        this.add(new ImageComponent(image, repeat, this));
-        return this;
-    }
-    
-    public function move(x:Int, y:Int):Entity
-    {
-        this.add(new PositionComponent(x, y, this));
-        
-        if (this.has(ImageComponent)) {
-            this.get(ImageComponent).move(x, y);
-        }
 
-        if (this.has(ColourComponent)) {
-            this.get(ColourComponent).move(x, y);
-        }
-
-        return this;
-    } 
-    
-    // MoveSpeed is in pixels per second
-    public function moveWithKeyboard(moveSpeed:Int):Entity
+    public function update(elapsedSeconds:Float):Void
     {
-        this.add(new KeyboardInputComponent(moveSpeed, this));
-        return this;
-    }
-    
-    public function trackWithCamera():Entity
-    {
-        this.add(new CameraComponent(this));
-        return this;
-    }
-    
-    public function onClick(callback:Float->Float->Void):Entity
-    {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent(callback, null, this);
-        this.add(mouseComponent);
-        return this;
-    }
-    
-    public function size(width:Int, height:Int):Entity
-    {
-        if (!this.has(ColourComponent))
+        for (component in this.components)
         {
-            this.add(new ColourComponent(255, 0, 0, width, height, this)); // default colour
+            component.update(elapsedSeconds);
         }
-        else
-        {
-            var c = this.get(ColourComponent);
-            var clr = c.colour;
-            this.remove(ColourComponent);
-            this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
-        }        
-        return this;
     }
-    
-    /////////////////////// End fluent API ///////////////////////
 }

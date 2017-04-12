@@ -26,4 +26,13 @@ class ImageComponent extends SpriteComponent
             this.sprite = new FlxSprite(0, 0, this.image);
         }
     }
+
+    override public function onEvent(event:String)
+    {
+        super.onEvent(event);
+
+        var position = this.parent.get(PositionComponent);
+        this.sprite.x = position.x;
+        this.sprite.y = position.y;        
+    }
 }

@@ -14,23 +14,28 @@ import turbo.ecs.Entity;
 
 class EcsTestState extends QuasarState
 {
-    private var e:Entity;
+    private var entities = new Array<Entity>();
 
     override public function create()
     {
         super.create();        
-        e = new Entity()
+        var e = new Entity()
             .image("assets/images/ui/new-game-button.png")
             .move(200, 100).health(50);
 
-        e.get(HealthComponent).damage(5);
-        trace('E: ${e.get(HealthComponent).currentHealth}/${e.get(HealthComponent).totalHealth}');
+        e.moveWithKeyboard(100);
 
         this.add(e.get(ImageComponent).sprite);
+
+        entities.push(e);
     }
 
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+        for (e in entities)
+        {
+            e.update(elapsed);
+        }
     }
 }

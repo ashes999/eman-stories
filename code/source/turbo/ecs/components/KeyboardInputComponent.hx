@@ -16,8 +16,10 @@ class KeyboardInputComponent extends AbstractComponent
         this.moveSpeed = moveSpeed;
     }
 
-    public function update(elapsedSeconds:Float):Void
+    override public function update(elapsedSeconds:Float):Void
     {
+        super.update(elapsedSeconds);
+        
         if (parent.has(PositionComponent))
         {
             var position:PositionComponent = parent.get(PositionComponent);        
@@ -46,6 +48,11 @@ class KeyboardInputComponent extends AbstractComponent
             
             position.x += dx;
             position.y += dy;
+
+            if (dx != 0 || dy != 0)
+            {
+                this.trigger("Moved");    
+            }
         }
     }
 
