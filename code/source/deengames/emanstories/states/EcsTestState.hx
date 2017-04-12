@@ -20,12 +20,18 @@ class EcsTestState extends QuasarState
     {
         super.create();        
         var e = new Entity()
-            .image("assets/images/ui/new-game-button.png")
-            .move(200, 100).health(50);
+            .colour(255, 0, 0)
+            .move(200, 100).health(50)
+            .size(128, 128);
 
         e.moveWithKeyboard(100);
+        e.onClick(function(x, y) {
+            trace("CLICK!");
+            e.remove(ImageComponent);
+            e.image("assets/images/ui/new-game-button.png");            
+        });
 
-        this.add(e.get(ImageComponent).sprite);
+        this.add(e.get(ColourComponent).sprite);
 
         entities.push(e);
     }

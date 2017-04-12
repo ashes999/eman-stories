@@ -13,15 +13,32 @@ class MouseClickComponent extends AbstractComponent
     public function new(onMouseDown:Float->Float->Void, onMouseUp:Float->Float->Void = null, parent:Entity)
     {
         super(parent);
+        this.mouseDownCallback = onMouseDown;
+        this.mouseUpCallback = onMouseUp;
+
         if (parent.has(ImageComponent))
         {
             var image = parent.get(ImageComponent);
-            FlxMouseEventManager.add(image.sprite, this.mouseDown, this.mouseUp);
+            if (image.sprite != null)
+            {
+                FlxMouseEventManager.add(image.sprite, this.mouseDown, this.mouseUp);
+            } 
+            else
+            {
+                throw "Can't add mouse-click to an image with a null sprite!";
+            }
         }
         else if (parent.has(ColourComponent))
         {
             var colour = parent.get(ColourComponent);
-            FlxMouseEventManager.add(colour.sprite, this.mouseDown, this.mouseUp);
+            if (colour.sprite != null)
+            {
+                FlxMouseEventManager.add(colour.sprite, this.mouseDown, this.mouseUp);                
+            } 
+            else
+            {
+                throw "Can't add mouse-click to a colour with a null sprite!";
+            }
         }
         else
         {
