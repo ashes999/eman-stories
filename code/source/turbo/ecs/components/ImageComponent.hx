@@ -6,6 +6,9 @@ import turbo.ecs.components.SpriteComponent;
 
 class ImageComponent extends SpriteComponent
 {
+    // Used to auto-add to the current state
+    public static var onAdd:ImageComponent->Void;
+
     public var image:String = "";
     
     // internal
@@ -24,6 +27,11 @@ class ImageComponent extends SpriteComponent
         else
         {
             this.sprite = new FlxSprite(0, 0, this.image);
+        }
+
+        if (ImageComponent.onAdd != null)
+        {
+            ImageComponent.onAdd(this);
         }
     }
 

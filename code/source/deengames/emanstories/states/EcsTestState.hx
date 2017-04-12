@@ -14,24 +14,37 @@ import turbo.ecs.Entity;
 
 class EcsTestState extends QuasarState
 {
+    // TODO: move to infrastructure
     private var entities = new Array<Entity>();
 
     override public function create()
     {
         super.create();        
+
+        // TODO: this is infrastructure
+        ImageComponent.onAdd = function(i) {
+            this.add(i.sprite);
+        }
+        ColourComponent.onAdd = function(c) {
+            this.add(c.sprite);
+        }
+        ColourComponent.onRemove = function(c) {
+            this.remove(c.sprite);
+        }
+
         var e = new Entity()
             .colour(255, 0, 0)
+            //.image("assets/images/ui/new-game-button.png")
             .move(200, 100).health(50)
             .size(128, 128);
 
         e.moveWithKeyboard(100);
         e.onClick(function(x, y) {
             trace("CLICK!");
-            e.remove(ImageComponent);
+            this.remove(e.get(ColourComponent).sprite);
+            e.remove(ColourComponent);
             e.image("assets/images/ui/new-game-button.png");            
         });
-
-        this.add(e.get(ColourComponent).sprite);
 
         entities.push(e);
     }

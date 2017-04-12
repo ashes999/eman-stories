@@ -6,6 +6,10 @@ import turbo.ecs.components.AbstractComponent;
 
 class ColourComponent extends SpriteComponent
 {
+     // Used to auto-add to the current state
+    public static var onAdd:ColourComponent->Void;
+    public static var onRemove:ColourComponent->Void;
+
     public var width(default, null):Int = 0;
     public var height(default, null):Int = 0;
     public var colour(default, null):FlxColor;    
@@ -22,6 +26,11 @@ class ColourComponent extends SpriteComponent
         this.height = height;
         this.colour = FlxColor.fromRGB(red, green, blue);
         this.sprite = makeSprite();
+
+         if (ColourComponent.onAdd != null)
+        {
+            ColourComponent.onAdd(this);
+        }
     }
 
     override public function onEvent(event:String)

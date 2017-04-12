@@ -94,7 +94,10 @@ class Entity
         {
             var c = this.get(ColourComponent);
             var clr = c.colour;
+            
             this.remove(ColourComponent);
+            ColourComponent.onRemove(c);
+            
             this.add(new ColourComponent(clr.red, clr.green, clr.blue, width, height, this));   
         }        
 
