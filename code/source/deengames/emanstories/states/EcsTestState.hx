@@ -20,9 +20,10 @@ class EcsTestState extends QuasarState
     {
         super.create();        
         e = new Entity()
-            .colour(255, 128, 0);
+            .image("assets/images/ui/new-game-button.png")
+            .move(200, 100);
 
-        this.add(e.get(ColourComponent).sprite);
+        this.add(e.get(ImageComponent).sprite);
     }
 
     override public function update(elapsed:Float):Void

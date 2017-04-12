@@ -20,6 +20,7 @@ class SpriteComponent extends AbstractComponent
 
     public function move(x:Float, y:Float):Void
     {
+        trace('Move ${x} ${y}; ${this.sprite}');
         if (this.sprite != null)
         {
             this.sprite.x = x;

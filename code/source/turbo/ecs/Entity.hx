@@ -58,7 +58,7 @@ class Entity
                 if (Std.is(component, clazz))
                 {
                     return cast(component);
-                }
+                }                
             }
         }
         
@@ -108,6 +108,15 @@ class Entity
     public function move(x:Int, y:Int):Entity
     {
         this.add(new PositionComponent(x, y, this));
+        
+        if (this.has(ImageComponent)) {
+            this.get(ImageComponent).move(x, y);
+        }
+
+        if (this.has(ColourComponent)) {
+            this.get(ColourComponent).move(x, y);
+        }
+
         return this;
     } 
     
