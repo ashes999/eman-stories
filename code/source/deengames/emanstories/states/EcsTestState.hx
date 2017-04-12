@@ -21,7 +21,10 @@ class EcsTestState extends QuasarState
         super.create();        
         e = new Entity()
             .image("assets/images/ui/new-game-button.png")
-            .move(200, 100);
+            .move(200, 100).health(50);
+
+        e.get(HealthComponent).damage(5);
+        trace('E: ${e.get(HealthComponent).currentHealth}/${e.get(HealthComponent).totalHealth}');
 
         this.add(e.get(ImageComponent).sprite);
     }

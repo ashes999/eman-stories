@@ -8,17 +8,17 @@ Anything with health. Has current/maximum health.
 class HealthComponent extends AbstractComponent
 {
     public var currentHealth(default, null):Int = 0;
-    public var maximumHealth(default, null):Int = 0;
+    public var totalHealth(default, null):Int = 0;
     
-    public function new(maximumHealth:Int, parent:Entity):Void
+    public function new(totalHealth:Int, parent:Entity):Void
     {
         super(parent);
         // TODO: throw if <= 0
-        this.currentHealth = maximumHealth;
-        this.maximumHealth = maximumHealth;        
+        this.currentHealth = totalHealth;
+        this.totalHealth = totalHealth;        
     }
 
-    public function getHurt(damage:Int):Void
+    public function damage(damage:Int):Void
     {
         var wasDead = this.currentHealth <= 0;
         this.currentHealth -= damage;
